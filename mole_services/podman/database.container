@@ -1,0 +1,15 @@
+[Unit]
+Description=WordPress Database Container
+
+[Container]
+EnvironmentFile=/home/mole/projects/${MOLE_PROJECT_NAME}/.env
+Label=app=wordpress
+ContainerName=database
+Image=docker.io/library/mariadb:latest
+Network=wordpress.network
+Volume=database.volume:/var/lib/mysql
+Secret=db-root-password,type=env,target=MARIADB_ROOT_PASSWORD
+Secret=db-user-password,type=env,target=MARIADB_PASSWORD
+Environment=MARIADB_USER=${MOLE_DB_USER}
+Environment=MARIADB_DATABASE=${MOLE_DB_NAME}
+

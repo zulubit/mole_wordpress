@@ -1,0 +1,18 @@
+[Unit]
+Description=Wordpress Container
+Requires=database.service
+After=database.service
+
+[Container]
+EnvironmentFile=/home/mole/projects/${MOLE_PROJECT_NAME}/.env
+Label=app=wordpress
+ContainerName=wordpress
+Image=docker.io/library/wordpress:latest
+Network=wordpress.network
+Volume=wordpress.volume:/var/www/html
+Secret=db-user-password,type=env,target=WORDPRESS_DB_PASSWORD
+Environment=WORDPRESS_DB_HOST=database
+Environment=WORDPRESS_DB_USER=${MOLE_DB_USER}
+Environment=WORDPRESS_DB_NAME=${MOLE_DB_NAME}
+PublishPort=${MOLE_PORT_APP}:80
+
