@@ -1,18 +1,20 @@
 [Unit]
-Description=Wordpress Container
-Requires=database.service
-After=database.service
+Description=Wordpress App Container
+Requires=mole-{{.MOLE_PROJECT_NAME}}-database.service
+After=mole-{{.MOLE_PROJECT_NAME}}-database.service
 
 [Container]
-EnvironmentFile=/home/mole/projects/${MOLE_PROJECT_NAME}/.env
 Label=app=wordpress
-ContainerName=wordpress
-Image=docker.io/library/wordpress:latest
-Network=wordpress.network
-Volume=wordpress.volume:/var/www/html
-Secret=db-user-password,type=env,target=WORDPRESS_DB_PASSWORD
-Environment=WORDPRESS_DB_HOST=database
-Environment=WORDPRESS_DB_USER=${MOLE_DB_USER}
-Environment=WORDPRESS_DB_NAME=${MOLE_DB_NAME}
-PublishPort=${MOLE_PORT_APP}:80
+ContainerName=wordpress-app
+Image=docker.io/library/wordpress:6
+Network=mole-{{.MOLE_PROJECT_NAME}}-wordpress.network
+Volume=mole-{{.MOLE_PROJECT_NAME}}-wordpress.volume:/var/www/html
+Environment=WORDPRESS_DB_HOST=wordpress-db
+Environment=WORDPRESS_DB_USER={{.MOLE_DB_USER}}
+Environment=WORDPRESS_DB_NAME={{.MOLE_DB_NAME}}
+# This one should be stored in a secret
+Environment=WORDPRESS_DB_PASSWORD={{.MOLE_DB_PASS}}
+PublishPort={{.MOLE_PORT_APP}}:80
 
+[Install]
+WantedBy=multi-user.target default.target

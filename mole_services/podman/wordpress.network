@@ -2,4 +2,4 @@
 Description=WordPress Container Network
 
 [Network]
-Label=app=wordpress
+Label=app={{.MOLE_PROJECT_NAME}}-wordpress

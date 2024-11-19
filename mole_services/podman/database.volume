@@ -2,4 +2,4 @@
 Description=WordPress Database Container Volume
 
 [Volume]
-Label=app=wordpress
+Label=app={{.MOLE_PROJECT_NAME}}-wordpress
