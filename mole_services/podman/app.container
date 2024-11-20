@@ -9,7 +9,7 @@ ContainerName=wordpress-app
 Image=docker.io/library/wordpress:6
 User=root
 Network=mole-{{.MOLE_PROJECT_NAME}}-wordpress.network
-Volume=mole-/home/mole/projects/{{.MOLE_PROJECT_NAME}}/www:/var/www/html
+Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/www:/var/www/html
 Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/mole_php.ini:/usr/local/etc/php/conf.d/custom.ini
 Environment=WORDPRESS_DB_HOST=wordpress-db
 Environment=WORDPRESS_DB_USER={{.MOLE_DB_USER}}
