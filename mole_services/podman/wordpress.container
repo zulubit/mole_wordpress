@@ -10,6 +10,7 @@ Image=docker.io/library/wordpress:6
 Network=mole-{{.MOLE_PROJECT_NAME}}-wordpress.network
 Volume=mole-{{.MOLE_PROJECT_NAME}}-wordpress.volume:/var/www/html
 Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/mole_php.ini:/usr/local/etc/php/conf.d/custom.ini
+Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/wp-config.php:/var/www/html/wp-config.php
 Environment=WORDPRESS_DB_HOST=wordpress-db
 Environment=WORDPRESS_DB_USER={{.MOLE_DB_USER}}
 Environment=WORDPRESS_DB_NAME={{.MOLE_DB_NAME}}
