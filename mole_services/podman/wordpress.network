@@ -1,6 +1,0 @@
-[Unit]
-Description=WordPress Container Network
-
-[Network]
-Label=app={{.MOLE_PROJECT_NAME}}-wordpress
-DNS=8.8.8.8
