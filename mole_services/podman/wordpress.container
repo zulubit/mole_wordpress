@@ -8,7 +8,7 @@ Label=app=wordpress
 ContainerName=wordpress-app
 Image=docker.io/library/wordpress:6
 User=root
-Network=host
+Network=mole-{{.MOLE_PROJECT_NAME}}-wordpress.network
 Volume=mole-{{.MOLE_PROJECT_NAME}}-wordpress.volume:/var/www/html
 Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/mole_php.ini:/usr/local/etc/php/conf.d/custom.ini
 Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/wp-config.php:/var/www/html/wp-config.php

@@ -5,7 +5,7 @@ Description=WordPress Database Container
 Label=app=wordpress
 ContainerName=wordpress-db
 Image=docker.io/library/mariadb:10
-Network=host
+Network=mole-{{.MOLE_PROJECT_NAME}}-wordpress.network
 Volume=mole-{{.MOLE_PROJECT_NAME}}-database.volume:/var/lib/mysql
 Environment=MARIADB_RANDOM_ROOT_PASSWORD=1
 Environment=MARIADB_USER={{.MOLE_DB_USER}}
