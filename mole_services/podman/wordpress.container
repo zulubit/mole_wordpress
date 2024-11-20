@@ -18,6 +18,7 @@ Environment=WORDPRESS_DB_NAME={{.MOLE_DB_NAME}}
 # This one should be stored in a secret
 Environment=WORDPRESS_DB_PASSWORD={{.MOLE_DB_PASS}}
 PublishPort={{.MOLE_PORT_APP}}:80
+AddHost={{.MOLE_APP_DOMAIN}}:127.0.0.1
 
 [Install]
 WantedBy=multi-user.target default.target
