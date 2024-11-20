@@ -1,29 +1,23 @@
 [Unit]
-Description=Bitnami Wordpress App Container
+Description=Wordpress App Container
 Requires=mole-{{.MOLE_PROJECT_NAME}}-database.service
 After=mole-{{.MOLE_PROJECT_NAME}}-database.service
 
 [Container]
 Label=app=wordpress
 ContainerName=wordpress-app
-Image=docker.io/bitnami/wordpress:latest
+Image=docker.io/library/wordpress:6
 User=root
 Network=mole-{{.MOLE_PROJECT_NAME}}-wordpress.network
-
-# Adjusted volume paths for Bitnami
-Volume=mole-{{.MOLE_PROJECT_NAME}}-wordpress.volume:/bitnami/wordpress
-Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/mole_php.ini:/opt/bitnami/php/conf/conf.d/custom.ini
-Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/wp-config.php:/bitnami/wordpress/wp-config.php
-
-# Environment variables tailored for Bitnami
-Environment=MARIADB_HOST=wordpress-db
-Environment=MARIADB_USER={{.MOLE_DB_USER}}
-Environment=MARIADB_DATABASE={{.MOLE_DB_NAME}}
-Environment=MARIADB_PASSWORD={{.MOLE_DB_PASS}}
-
-# Port publishing and hostname
-PublishPort={{.MOLE_PORT_APP}}:8080
-AddHost={{.MOLE_APP_DOMAIN}}:127.0.0.1
+Volume=mole-{{.MOLE_PROJECT_NAME}}-wordpress.volume:/var/www/html
+Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/mole_php.ini:/usr/local/etc/php/conf.d/custom.ini
+Volume=/home/mole/projects/{{.MOLE_PROJECT_NAME}}/wp-config.php:/var/www/html/wp-config.php
+Environment=WORDPRESS_DB_HOST=wordpress-db
+Environment=WORDPRESS_DB_USER={{.MOLE_DB_USER}}
+Environment=WORDPRESS_DB_NAME={{.MOLE_DB_NAME}}
+# This one should be stored in a secret
+Environment=WORDPRESS_DB_PASSWORD={{.MOLE_DB_PASS}}
+PublishPort={{.MOLE_PORT_APP}}:80
 
 [Install]
 WantedBy=multi-user.target default.target
