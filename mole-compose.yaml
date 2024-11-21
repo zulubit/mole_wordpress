@@ -1,12 +1,10 @@
 services:
   db:
-    # Use a MariaDB image compatible with amd64 & arm64 architectures
     image: mariadb:10.6.4-focal
-    # If you prefer MySQL, uncomment the following line
-    # image: mysql:8.0.27
     command: "--default-authentication-plugin=mysql_native_password"
     volumes:
       - {{.MOLE_PROJECT_NAME}}-db_data:/var/lib/mysql
+      - {{.MOLE_LOG_PATH}}:/var/log
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD={{.MOLE_APP_KEY}}
@@ -15,11 +13,17 @@ services:
       - MYSQL_PASSWORD={{.MOLE_DB_PASS}}
     networks:
       - {{.MOLE_PROJECT_NAME}}-app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
 
   wordpress:
     image: wordpress:latest
     volumes:
       - {{.MOLE_PROJECT_NAME}}-wp_data:/var/www/html
+      - {{.MOLE_LOG_PATH}}:/var/log
     ports:
       - 127.0.0.1:{{.MOLE_PORT_APP}}:80
     restart: always
@@ -30,6 +34,11 @@ services:
       - WORDPRESS_DB_NAME={{.MOLE_DB_NAME}}
     networks:
       - {{.MOLE_PROJECT_NAME}}-app_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
 
 volumes:
   {{.MOLE_PROJECT_NAME}}-db_data:
