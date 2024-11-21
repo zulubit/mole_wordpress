@@ -24,6 +24,8 @@ services:
     volumes:
       - {{.MOLE_PROJECT_NAME}}-wp_data:/var/www/html
       - {{.MOLE_LOG_PATH}}:/var/log
+      # you should probably mount your theme if you want to include it in the repository:
+      # - {{.MOLE_ROOT_PATH}}/mytheme:/var/www/html/wp-content/themes/mytheme
     ports:
       - 127.0.0.1:{{.MOLE_PORT_APP}}:80
     restart: always
